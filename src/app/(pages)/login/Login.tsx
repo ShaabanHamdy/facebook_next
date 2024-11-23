@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import RegisterModal from "../register/Register";
 import facebookLogo from "../../images/Facebook-Logo.png";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 interface LoginValues {
   identifier: string;
   password: string;
@@ -37,31 +37,28 @@ const Login: React.FC = () => {
   });
 
   const handleLogin = async (values: LoginValues) => {
-    
-
     try {
       const { data } = await axios.post(
         "http://localhost:5000/user/login",
         values
-      ); 
-      
+      );
+
       if (data.message == "success") {
         localStorage.setItem("token", data.token);
-        setBackError("")
+        setBackError("");
         toast.success("Login successful!");
-        router.push('/home');
+        router.push("/home");
       }
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;
       toast.error("Login failed. Please try again.");
-      
+
       if (axiosError.response) {
-        setBackError(axiosError.response.data.message)
+        setBackError(axiosError.response.data.message);
         // console.log(axiosError.response.data.message); // TypeScript will now recognize `message`
       } else {
         // console.log("An unknown error occurred.");
       }
-      
     }
   };
 
@@ -69,7 +66,7 @@ const Login: React.FC = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <Toaster />
       {/* Left Div with Logo */}
-      <div className="mx-5   h-[60vh] w-[40%]">
+      <div className="hidden lg:block mx-5   h-[60vh] w-[40%]">
         <div className=" h-[160px]">
           <Image
             src={facebookLogo}
@@ -82,8 +79,21 @@ const Login: React.FC = () => {
           Facebook helps you connect and share with the people in your life.
         </h2>
       </div>
-      <div className="rounded-lg w-[30%] shadow-lg bg-white  p-8">
+      <div className=" rounded-lg  lg:w-[30%]  shadow-lg bg-white  p-8">
         {/* Right Div with Login Form */}
+        <div className="lg:hidden">
+          <div className="flex justify-center   h-24 ">
+            <Image
+              src={facebookLogo}
+              alt="facebook Logo"
+              width={300}
+              priority
+            ></Image>
+          </div>
+          <h2 className="text-center text-[20px] my-3">
+            Facebook helps you connect and share with the people in your life.
+          </h2>
+        </div>
         <div className="">
           {/* <h2 className="text-2xl font-semibold text-center mb-4">Login</h2> */}
           <Formik
@@ -104,7 +114,9 @@ const Login: React.FC = () => {
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
-                {errorBack === "invalid email  information" && <div className="text-red-500 pt-1">{errorBack}</div>}
+                {errorBack === "invalid email  information" && (
+                  <div className="text-red-500 pt-1">{errorBack}</div>
+                )}
               </div>
               <div>
                 <Field
@@ -112,13 +124,15 @@ const Login: React.FC = () => {
                   name="password"
                   placeholder="Password"
                   className="w-full p-2 border border-blue-500 rounded"
-                  />
+                />
                 <ErrorMessage
                   name="password"
                   component="div"
                   className="text-red-500 text-sm"
-                  />
-                  {errorBack === "invalid password information" && <div className="text-red-500 pt-1">{errorBack}</div>}
+                />
+                {errorBack === "invalid password information" && (
+                  <div className="text-red-500 pt-1">{errorBack}</div>
+                )}
               </div>
               <button
                 type="submit"

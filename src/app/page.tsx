@@ -2,7 +2,7 @@
 import Login from "./(pages)/login/Login";
 
 const Page = () => {
-  
+ 
   return (
     <>
     

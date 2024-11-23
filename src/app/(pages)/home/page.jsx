@@ -1,13 +1,15 @@
-import React from "react";
+import CreatePost from "../createPost/CreatePost";
 import Navbar from "../navbar/Navbar";
-
+import Sidebar from "../sidebar/Sidebar";
 
 const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="to-blue-400">
-        <h1>Home</h1>
+      <Sidebar />
+
+      <div className="pt-24 dark:bg-gray-900 dark:text-white sm:ps-16">
+        <CreatePost />
       </div>
     </>
   );
